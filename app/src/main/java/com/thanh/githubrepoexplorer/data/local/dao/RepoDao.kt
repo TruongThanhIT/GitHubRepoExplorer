@@ -40,16 +40,14 @@ interface RepoDao {
         UPDATE repositories
         SET    stars         = :stars,
                language      = :language,
-               detailsLoaded = 1,
-               lastUpdated   = :lastUpdated
+               detailsLoaded = 1
         WHERE  id = :repoId
     """
     )
     suspend fun updateRepoDetails(
         repoId: Long,
         stars: Int,
-        language: String?,
-        lastUpdated: Long = System.currentTimeMillis()
+        language: String?
     )
 }
 
