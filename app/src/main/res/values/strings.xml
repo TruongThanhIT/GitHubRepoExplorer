@@ -10,4 +10,11 @@
     <string name="language_unknown">Unknown</string>
     <string name="loading_details">Loading details…</string>
     <string name="cd_bookmark">Bookmark</string>
+
+    <!-- Error Messages -->
+    <string name="error_rate_limit">GitHub API rate limit exceeded.</string>
+    <string name="error_no_internet">No internet connection. Please check your network and retry.</string>
+    <string name="error_timeout">Request timed out. Please check your connection and retry.</string>
+    <string name="error_http">Server error. Please retry.</string>
+    <string name="error_unknown">An unexpected error occurred.</string>
 </resources>

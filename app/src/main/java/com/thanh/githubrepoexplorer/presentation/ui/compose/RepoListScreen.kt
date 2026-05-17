@@ -48,7 +48,8 @@ import com.thanh.githubrepoexplorer.R
 import com.thanh.githubrepoexplorer.domain.model.Repo
 import com.thanh.githubrepoexplorer.domain.model.SortOrder
 import com.thanh.githubrepoexplorer.domain.model.label
-import com.thanh.githubrepoexplorer.presentation.mapper.toErrorMessage
+import androidx.compose.ui.platform.LocalContext
+import com.thanh.githubrepoexplorer.presentation.mapper.toUiText
 import com.thanh.githubrepoexplorer.presentation.model.RepoListAction
 import com.thanh.githubrepoexplorer.presentation.model.RepoListEvent
 import com.thanh.githubrepoexplorer.presentation.model.RepoListUiState
@@ -71,6 +72,8 @@ fun RepoListScreenRoot(
     val snackbarHostState = remember { SnackbarHostState() }
     var isRefreshing by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         snapshotFlow { repos.loadState.refresh }
             .collect { state ->
@@ -84,7 +87,7 @@ fun RepoListScreenRoot(
                     is LoadState.Error -> {
                         isRefreshing = false
                         viewModel.markReady()
-                        snackbarHostState.showSnackbar(state.error.toErrorMessage())
+                        snackbarHostState.showSnackbar(state.error.toUiText().asString(context))
                     }
                 }
             }
@@ -93,7 +96,7 @@ fun RepoListScreenRoot(
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                is RepoListEvent.ShowDetailError -> snackbarHostState.showSnackbar(event.error.toErrorMessage())
+                is RepoListEvent.ShowDetailError -> snackbarHostState.showSnackbar(event.error.toUiText().asString(context))
             }
         }
     }
@@ -254,7 +257,7 @@ private fun RepoListScreen(
                                 }
 
                                 is LoadState.Error -> item {
-                                    AppendErrorRow(message = appendState.error.toErrorMessage())
+                                    AppendErrorRow(message = appendState.error.toUiText().asString())
                                 }
 
                                 else -> Unit
