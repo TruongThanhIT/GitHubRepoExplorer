@@ -30,7 +30,11 @@ A modern Android application that explores public GitHub repositories.
 
 ## 🏗 Architectural Decisions & Assumptions
 ### Clean architecture 
-General ![onion.png](onion.png) / Android ![architecture.png](architecture.png)
+General 
+
+![onion.png](onion.png) 
+
+Android ![architecture.png](architecture.png)
 
 ### Modularization proposal
 In our modularization proposal is based on three module types: `app`, `feature`, and `api`. 
