@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,8 +48,6 @@ import androidx.paging.compose.itemKey
 import com.thanh.githubrepoexplorer.R
 import com.thanh.githubrepoexplorer.domain.model.Repo
 import com.thanh.githubrepoexplorer.domain.model.SortOrder
-import com.thanh.githubrepoexplorer.domain.model.label
-import androidx.compose.ui.platform.LocalContext
 import com.thanh.githubrepoexplorer.presentation.mapper.toUiText
 import com.thanh.githubrepoexplorer.presentation.model.RepoListAction
 import com.thanh.githubrepoexplorer.presentation.model.RepoListEvent
@@ -59,6 +58,7 @@ import com.thanh.githubrepoexplorer.presentation.ui.compose.component.ErrorMessa
 import com.thanh.githubrepoexplorer.presentation.ui.compose.component.LanguageHeader
 import com.thanh.githubrepoexplorer.presentation.ui.compose.component.RepoItem
 import com.thanh.githubrepoexplorer.presentation.ui.theme.GitHubRepoExplorerTheme
+import com.thanh.githubrepoexplorer.presentation.mapper.label
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
