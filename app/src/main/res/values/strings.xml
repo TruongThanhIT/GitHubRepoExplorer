@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GitHubRepoExplorer</string>
+    <string name="retry">Retry</string>
+    <string name="cd_info_tag">Info tag</string>
+    <string name="cd_owner_avatar">Owner Avatar</string>
+    <string name="app_title">GitHub Explorer</string>
+    <string name="cd_group_by_language">Group by Language</string>
+    <string name="cd_sort">Sort</string>
+    <string name="sort_order_selected">✓</string>
+    <string name="language_unknown">Unknown</string>
+    <string name="loading_details">Loading details…</string>
+    <string name="cd_bookmark">Bookmark</string>
 </resources>
