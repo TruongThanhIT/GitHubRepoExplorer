@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import com.thanh.githubrepoexplorer.data.local.db.GithubDatabase
-import com.thanh.githubrepoexplorer.data.local.entity.RepoEntity
+import com.thanh.githubrepoexplorer.util.TestDataGenerator.createRepoEntity
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -37,8 +37,8 @@ class RepoDaoTest {
     fun `upsertAll and getEnrichedEntities should work correctly`() = runTest {
         // Given
         val repos = listOf(
-            fakeRepoEntity(1, detailsLoaded = true),
-            fakeRepoEntity(2, detailsLoaded = false)
+            createRepoEntity(1, detailsLoaded = true),
+            createRepoEntity(2, detailsLoaded = false)
         )
 
         // When
@@ -53,7 +53,7 @@ class RepoDaoTest {
     @Test
     fun `updateBookmark should update the correct repo`() = runTest {
         // Given
-        val repo = fakeRepoEntity(1, isBookmarked = false)
+        val repo = createRepoEntity(1, isBookmarked = false)
         repoDao.upsertAll(listOf(repo))
 
         // When
@@ -68,8 +68,8 @@ class RepoDaoTest {
     fun `clearAllNonBookmarked should keep bookmarked repos`() = runTest {
         // Given
         val repos = listOf(
-            fakeRepoEntity(1, isBookmarked = true),
-            fakeRepoEntity(2, isBookmarked = false)
+            createRepoEntity(1, isBookmarked = true),
+            createRepoEntity(2, isBookmarked = false)
         )
         repoDao.upsertAll(repos)
 
@@ -84,7 +84,7 @@ class RepoDaoTest {
     @Test
     fun `updateRepoDetails should update details and set detailsLoaded to true`() = runTest {
         // Given
-        val repo = fakeRepoEntity(1, detailsLoaded = false, stars = 0)
+        val repo = createRepoEntity(1, detailsLoaded = false, stars = 0)
         repoDao.upsertAll(listOf(repo))
 
         // When
@@ -99,20 +99,5 @@ class RepoDaoTest {
         assertThat(enriched[0].language).isEqualTo("Kotlin")
     }
 
-    private fun fakeRepoEntity(
-        id: Long,
-        detailsLoaded: Boolean = false,
-        isBookmarked: Boolean = false,
-        stars: Int = 0
-    ) = RepoEntity(
-        id = id,
-        name = "name$id",
-        fullName = "fullName$id",
-        description = "desc$id",
-        ownerLogin = "owner$id",
-        ownerAvatarUrl = "avatar$id",
-        detailsLoaded = detailsLoaded,
-        isBookmarked = isBookmarked,
-        stars = stars
-    )
+
 }

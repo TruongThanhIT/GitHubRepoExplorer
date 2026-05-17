@@ -7,6 +7,7 @@ import com.thanh.githubrepoexplorer.data.local.dao.RepoDao
 import com.thanh.githubrepoexplorer.data.local.db.GithubDatabase
 import com.thanh.githubrepoexplorer.data.local.entity.RemoteKey
 import com.thanh.githubrepoexplorer.data.local.entity.RepoEntity
+import com.thanh.githubrepoexplorer.util.TestDataGenerator.createRepoEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -47,7 +48,7 @@ class LocalDataSourceImplTest {
     @Test
     fun `upsertAll should delegate to repoDao`() = runTest {
         // Given
-        val repos = listOf(fakeRepoEntity(1))
+        val repos = listOf(createRepoEntity(1))
         coEvery { repoDao.upsertAll(repos) } returns Unit
 
         // When
@@ -156,7 +157,7 @@ class LocalDataSourceImplTest {
     @Test
     fun `getEnrichedEntities should delegate to repoDao`() = runTest {
         // Given
-        val entities = listOf(fakeRepoEntity(1))
+        val entities = listOf(createRepoEntity(1))
         coEvery { repoDao.getEnrichedEntities() } returns entities
 
         // When
@@ -192,13 +193,4 @@ class LocalDataSourceImplTest {
         // Then
         coVerify(exactly = 1) { remoteKeyDao.clearRemoteKeys() }
     }
-
-    private fun fakeRepoEntity(id: Long) = RepoEntity(
-        id = id,
-        name = "name",
-        fullName = "fullName",
-        description = "desc",
-        ownerLogin = "owner",
-        ownerAvatarUrl = "avatar"
-    )
 }
