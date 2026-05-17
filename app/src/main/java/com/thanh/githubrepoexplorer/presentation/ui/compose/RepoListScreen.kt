@@ -37,6 +37,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -115,7 +116,7 @@ fun RepoListScreenRoot(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RepoListScreen(
+internal fun RepoListScreen(
     modifier: Modifier = Modifier,
     uiState: RepoListUiState,
     pagingData: Flow<PagingData<Repo>>,
@@ -131,7 +132,11 @@ private fun RepoListScreen(
     Box(modifier = modifier.fillMaxSize()) {
         when (uiState) {
             RepoListUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .testTag("RepoListScreen:Loading")
+                )
             }
 
             is RepoListUiState.Success -> {
@@ -205,7 +210,9 @@ private fun RepoListScreen(
                     PullToRefreshBox(
                         isRefreshing = isRefreshing,
                         onRefresh = onRefresh,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .testTag("RepoListScreen:List")
                     ) {
                         LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
                             if (uiState.groupByLanguage && groupedRepos != null) {
@@ -270,7 +277,9 @@ private fun RepoListScreen(
             is RepoListUiState.Error -> {
                 ErrorMessage(
                     message = uiState.message,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .testTag("RepoListScreen:Error")
                 )
             }
         }

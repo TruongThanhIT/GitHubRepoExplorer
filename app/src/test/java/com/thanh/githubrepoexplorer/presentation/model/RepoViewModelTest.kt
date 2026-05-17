@@ -9,23 +9,22 @@ import com.thanh.githubrepoexplorer.domain.model.error.DataError
 import com.thanh.githubrepoexplorer.domain.usecase.FetchRepoDetailsUseCase
 import com.thanh.githubrepoexplorer.domain.usecase.GetRepositoriesUseCase
 import com.thanh.githubrepoexplorer.domain.usecase.ToggleBookmarkUseCase
+import com.thanh.githubrepoexplorer.util.TestDataGenerator.createRepo
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import io.mockk.verify
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceTimeBy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -107,7 +106,7 @@ class RepoViewModelTest {
     @Test
     fun `onAction ToggleBookmark should call use case`() = runTest {
         // Given
-        val repo = fakeRepo(1, "repo")
+        val repo = createRepo(1, "repo")
         coEvery { toggleBookmarkUseCase(repo) } returns Unit
         
         // When
@@ -121,7 +120,7 @@ class RepoViewModelTest {
     @Test
     fun `fetchRepoDetails should emit error event when use case fails`() = runTest {
         // Given
-        val repo = fakeRepo(1, "repo")
+        val repo = createRepo(1, "repo")
         val error = DataError.Network.NoInternet
         coEvery { fetchRepoDetailsUseCase(repo) } returns Result.Error(error)
         
@@ -134,6 +133,7 @@ class RepoViewModelTest {
         assertThat((event as RepoListEvent.ShowDetailError).error).isEqualTo(error)
     }
 
+    @Suppress("UnusedFlow")
     @Test
     fun `repoPagingData should call getRepositoriesUseCase when state changes`() = runTest {
         // Given
@@ -151,17 +151,4 @@ class RepoViewModelTest {
         verify(atLeast = 1) { getRepositoriesUseCase(any()) }
         job.cancel()
     }
-
-    private fun fakeRepo(id: Long, name: String) = Repo(
-        id = id,
-        name = name,
-        fullName = "owner/$name",
-        description = "desc",
-        ownerLogin = "owner",
-        avatarUrl = "",
-        stars = 0,
-        language = "Kotlin",
-        detailsLoaded = false,
-        isBookmarked = false
-    )
 }
