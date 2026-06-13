@@ -50,6 +50,13 @@ android {
         compose = true
         buildConfig = true
     }
+
+    lint {
+        abortOnError = true
+        warningsAsErrors = false
+        xmlReport = true
+        htmlReport = true
+    }
 }
 
 kotlin {
