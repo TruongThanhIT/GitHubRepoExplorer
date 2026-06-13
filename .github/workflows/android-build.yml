@@ -14,7 +14,7 @@ jobs:
     steps:
       # 1. Checkout code from GitHub Repo to server CI
       - name: Checkout Source Code
-        uses: TruongThanhIT/GitHubRepoExplorer@v1.0.0
+        uses: actions/checkout@v4
 
       # 2. Config env JDK
       - name: Set up JDK 17
