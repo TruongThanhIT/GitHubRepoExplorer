@@ -52,14 +52,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: lint-report
+          name: android-lint-report
           path: app/build/reports/lint-results-debug.*
-
-      - name: Display Lint Issues on GitHub UI
-        uses: rnkdsh/action-android-lint@v1
-        if: always()
-        with:
-          lint-xml-file: app/build/reports/lint-results-debug.xml
 
       # Run build
       - name: Build Debug APK
