@@ -55,12 +55,23 @@ jobs:
           name: android-lint-report
           path: app/build/reports/lint-results-debug.*
 
-      # Run build
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
+      # Decode Keystore
+      - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 --decode > app/release.keystore
 
-      - name: Upload Debug APK
+      # Run build
+      - name: Build with Keystore
+        run: ./gradlew assembleRelease
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
+
+      # Upload Build Outputs
+      - name: Upload Build Outputs
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: release-outputs
+          path: app/build/outputs/apk/release/

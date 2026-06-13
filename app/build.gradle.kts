@@ -32,15 +32,27 @@ android {
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
     }
 
+    signingConfigs {
+        create("release") {
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyPassword = System.getenv("KEYSTORE_PASSWORD")
+            storeFile = file("release.keystore")
+            keyAlias = "github"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
