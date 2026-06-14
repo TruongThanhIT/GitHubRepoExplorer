@@ -35,6 +35,15 @@ android {
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            all {
+                it.systemProperty("robolectric.enabledSdks", "35")
+            }
+        }
+    }
+
     signingConfigs {
         val password = System.getenv("KEYSTORE_PASSWORD")
         if (password != null) {
