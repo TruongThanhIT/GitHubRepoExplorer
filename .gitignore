@@ -39,3 +39,4 @@ fastlane/test_output/
 
 # Firebase
 firebase-creds.json
+.env
