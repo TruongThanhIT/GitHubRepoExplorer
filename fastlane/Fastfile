@@ -2,22 +2,54 @@ default_platform(:android)
 
 platform :android do
   desc "Run Unit Test, Lint and Build APK Release for CI/Nightly"
-    lane :ci_check do
-
-      api_level = ENV["API_LEVEL"] || "36"
-
+    lane :ci_check do |options|
+      api_level = options[:api_level] || ENV["API_LEVEL"] || "36"
       puts "🚀 Starting CI Check for API Level: #{api_level}"
 
       gradle(task: "testDebugUnitTest")
-
       gradle(task: "lintRelease")
-
       gradle(
         task: "assemble",
         build_type: "Release",
         properties: {
-          "android.builder.sdkDownload" => true
+          "android.builder.sdkDownload" => true,
+          "API_LEVEL" => api_level
         }
+      )
+    end
+
+  desc "Build and Ship to Store (Firebase or Play Store)"
+    lane :ship do |options|
+      target = options[:target_store] || ENV["TARGET_STORE"] || "firebase"
+
+      if target == "firebase"
+        deploy_internal
+      elsif target == "google_play"
+        # Logic for Google Play if needed
+        puts "🚀 Shipping to Google Play..."
+        gradle(task: "bundle", build_type: "Release")
+        # upload_to_play_store(...)
+      end
+    end
+
+  desc "Build Debug APK and Deploy to Firebase App Distribution"
+    private_lane :deploy_internal do
+      puts "🚀 Starting Internal Deployment to Firebase..."
+
+      gradle(task: "assemble", build_type: "Debug")
+
+      service_account_json = ENV["FIREBASE_SERVICE_ACCOUNT_JSON"]
+      # Remove leading/trailing single quotes if they exist (common issue with env vars)
+      if service_account_json
+        service_account_json = service_account_json.strip.gsub(/^'|'$/, '')
+        service_account_json = service_account_json.gsub('\\n', "\n")
+      end
+
+      firebase_app_distribution(
+        service_credentials_json_data: service_account_json,
+        app: ENV["FIREBASE_APP_ID"],
+        groups: ENV["FIREBASE_TESTER_GROUPS"],
+        release_notes: "CI/CD Build: " + changelog_from_git_commits(commits_count: 1)
       )
     end
 end

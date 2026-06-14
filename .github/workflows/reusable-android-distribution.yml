@@ -1,0 +1,47 @@
+name: Reusable Distribution
+
+on:
+  workflow_call:
+    inputs:
+      target-store: # "firebase" or "google_play"
+        required: true
+        type: string
+      FIREBASE_APP_ID:
+        required: false
+        type: string
+      FIREBASE_TESTER_GROUPS:
+        required: false
+        type: string
+    secrets:
+      KEYSTORE_BASE64:
+        required: true
+      MY_KEYSTORE_PASSWORD:
+        required: true
+      STORE_API_KEY_JSON:
+        required: false # for Google Play
+      FIREBASE_SERVICE_ACCOUNT_JSON:
+        required: false # for Firebase
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Environment
+        uses: ./.github/actions/setup-android-env
+
+      - name: Decode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/release.keystore
+
+      - name: Run Fastlane Ship
+        run: bundle exec fastlane android ship
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
+          TARGET_STORE: ${{ inputs.target-store }}
+          GOOGLE_PLAY_JSON: ${{ secrets.STORE_API_KEY_JSON }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_APP_ID: ${{ inputs.FIREBASE_APP_ID }}
+          FIREBASE_TESTER_GROUPS: ${{ inputs.FIREBASE_TESTER_GROUPS }}

@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Run Unit Test, Lint and Build APK Release for CI/Nightly
 
+### android ship
+
+```sh
+[bundle exec] fastlane android ship
+```
+
+Build and Ship to Store (Firebase or Play Store)
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

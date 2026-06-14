@@ -12,9 +12,6 @@ jobs:
       matrix:
         api-level: [24, 30, 35, 36]
 
-    uses: ./.github/workflows/reusable-android-build.yml
+    uses: ./.github/workflows/reusable-android-verification.yml
     with:
       api-level: ${{ matrix.api-level }}
-    secrets:
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-      MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}

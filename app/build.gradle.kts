@@ -7,15 +7,14 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    id("com.google.gms.google-services")
 }
 
-val apiLevelFromEnv = System.getenv("API_LEVEL")?.toIntOrNull()
+val apiLevelFromEnv = (System.getenv("API_LEVEL") ?: project.findProperty("API_LEVEL")?.toString())?.toIntOrNull()
 
 android {
     namespace = "com.thanh.githubrepoexplorer"
-    compileSdk {
-        version =  release(apiLevelFromEnv ?: 36)
-    }
+    compileSdk = apiLevelFromEnv ?: 36
 
     defaultConfig {
         applicationId = "com.thanh.githubrepoexplorer"
@@ -35,11 +34,14 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = rootProject.file("app/release.keystore")
-            storePassword = System.getenv("KEYSTORE_PASSWORD")
-            keyAlias = "github"
-            keyPassword = System.getenv("KEYSTORE_PASSWORD")
+        val password = System.getenv("KEYSTORE_PASSWORD")
+        if (password != null) {
+            create("release") {
+                storeFile = rootProject.file("app/release.keystore")
+                storePassword = password
+                keyAlias = "github"
+                keyPassword = password
+            }
         }
     }
 
@@ -47,7 +49,10 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
+            val password = System.getenv("KEYSTORE_PASSWORD")
+            if (password != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -116,4 +121,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 }

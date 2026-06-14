@@ -8,9 +8,6 @@ on:
 
 jobs:
   android-build:
-    uses: ./.github/workflows/reusable-android-build.yml
+    uses: ./.github/workflows/reusable-android-verification.yml
     with:
       api-level: 36
-    secrets:
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-      MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
