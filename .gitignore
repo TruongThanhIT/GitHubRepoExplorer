@@ -40,3 +40,6 @@ fastlane/test_output/
 # Firebase
 firebase-creds.json
 .env
+
+# Kotlin compiler session files
+.kotlin/
