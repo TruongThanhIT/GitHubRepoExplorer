@@ -23,12 +23,15 @@ on:
         required: false # for Firebase
       GH_TOKEN:
         required: true
+      GOOGLE_SERVICES_JSON:
+        required: false
 
 jobs:
   distribute:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_CONTENT: ${{ secrets.GOOGLE_SERVICES_JSON }}
     steps:
       - uses: actions/checkout@v4
         with:

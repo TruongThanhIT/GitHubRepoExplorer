@@ -10,6 +10,7 @@ jobs:
       api-level: 36
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
 
   upload-firebase:
     needs: verify-code
@@ -23,3 +24,4 @@ jobs:
       MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
       FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}

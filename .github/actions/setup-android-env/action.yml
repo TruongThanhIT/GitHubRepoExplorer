@@ -24,3 +24,16 @@ runs:
     - name: Make gradlew executable
       shell: bash # must have in composite action
       run: chmod +x ./gradlew
+
+    - name: Create google-services.json
+      shell: bash
+      run: |
+        if [ -n "$GOOGLE_SERVICES_CONTENT" ]; then
+          echo "$GOOGLE_SERVICES_CONTENT" > app/google-services.json
+        else
+          echo "Warning: GOOGLE_SERVICES_CONTENT is not set. Using dummy file if on CI."
+          # If we are on CI and the file doesn't exist, create a dummy one to satisfy the plugin
+          if [ ! -f "app/google-services.json" ]; then
+             echo '{"project_info":{"project_number":"0","project_id":"dummy","storage_bucket":"dummy"},"client":[{"client_info":{"mobilesdk_app_id":"dummy","android_client_info":{"package_name":"com.thanh.githubrepoexplorer"}},"api_key":[{"current_key":"dummy"}],"services":{"appinvite_service":{"status":1}}}]}' > app/google-services.json
+          fi
+        fi

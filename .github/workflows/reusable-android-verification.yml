@@ -9,12 +9,15 @@ on:
     secrets:
       GH_TOKEN:
         required: true
+      GOOGLE_SERVICES_JSON:
+        required: false
 
 jobs:
   verify:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_CONTENT: ${{ secrets.GOOGLE_SERVICES_JSON }}
       API_LEVEL: ${{ inputs.api-level }}
     steps:
       - uses: actions/checkout@v4

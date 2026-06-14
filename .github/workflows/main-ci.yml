@@ -13,3 +13,4 @@ jobs:
       api-level: 36
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
