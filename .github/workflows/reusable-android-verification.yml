@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      API_LEVEL: ${{ inputs.api-level }}
     steps:
       - uses: actions/checkout@v4
 

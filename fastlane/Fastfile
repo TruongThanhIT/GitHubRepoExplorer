@@ -6,8 +6,20 @@ platform :android do
       api_level = options[:api_level] || ENV["API_LEVEL"] || "36"
       puts "🚀 Starting CI Check for API Level: #{api_level}"
 
-      gradle(task: "testDebugUnitTest")
-      gradle(task: "lintRelease")
+      gradle(
+        task: "testDebugUnitTest",
+        properties: {
+          "API_LEVEL" => api_level
+        }
+      )
+
+      gradle(
+        task: "lintRelease",
+        properties: {
+          "API_LEVEL" => api_level
+        }
+      )
+
       gradle(
         task: "assemble",
         build_type: "Release",
