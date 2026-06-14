@@ -1,0 +1,20 @@
+name: Nightly Compatibility Check
+
+on:
+  schedule:
+    # Run on 00:02 AM daily
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  android-ci-matrix:
+    strategy:
+      matrix:
+        api-level: [24, 30, 33, 35]
+
+    uses: ./.github/workflows/reusable-android-build.yml
+    with:
+      api-level: ${{ matrix.api-level }}
+    secrets:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}

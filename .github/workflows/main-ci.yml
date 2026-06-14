@@ -7,14 +7,10 @@ on:
     branches: [ "master" ]
 
 jobs:
-  android-ci-matrix:
-    strategy:
-      matrix:
-        api-level: [24, 33, 35]
-
+  android-build:
     uses: ./.github/workflows/reusable-android-build.yml
     with:
-      api-level: ${{ matrix.api-level }}
+      api-level: 35
     secrets:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
