@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/reusable-android-verification.yml
     with:
       api-level: 36
+    secrets: inherit
 
   upload-firebase:
     needs: verify-code

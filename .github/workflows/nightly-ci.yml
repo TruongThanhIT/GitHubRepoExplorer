@@ -15,3 +15,4 @@ jobs:
     uses: ./.github/workflows/reusable-android-verification.yml
     with:
       api-level: ${{ matrix.api-level }}
+    secrets: inherit

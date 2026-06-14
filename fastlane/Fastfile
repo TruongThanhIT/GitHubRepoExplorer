@@ -39,10 +39,9 @@ platform :android do
       gradle(task: "assemble", build_type: "Debug")
 
       service_account_json = ENV["FIREBASE_SERVICE_ACCOUNT_JSON"]
-      # Remove leading/trailing single quotes if they exist (common issue with env vars)
       if service_account_json
         service_account_json = service_account_json.strip.gsub(/^'|'$/, '')
-        service_account_json = service_account_json.gsub('\\n', "\n")
+        service_account_json = service_account_json.gsub(/\n|\r|\t/, '')
       end
 
       firebase_app_distribution(

@@ -29,7 +29,9 @@ android {
             val f = rootProject.file("local.properties")
             if (f.exists()) f.inputStream().use { load(it) }
         }
-        val githubToken: String = localProps.getProperty("GITHUB_TOKEN") ?: ""
+        val githubToken: String = System.getenv("GITHUB_TOKEN")
+            ?: localProps.getProperty("GITHUB_TOKEN")
+            ?: ""
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
     }
 
