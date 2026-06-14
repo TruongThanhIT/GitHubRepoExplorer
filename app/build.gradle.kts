@@ -35,12 +35,6 @@ android {
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
     }
 
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-    }
-
     signingConfigs {
         val password = System.getenv("KEYSTORE_PASSWORD")
         if (password != null) {
