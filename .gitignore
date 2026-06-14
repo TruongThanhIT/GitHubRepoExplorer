@@ -36,3 +36,6 @@ google-services.json
 # Fastlane artifacts
 fastlane/report.xml
 fastlane/test_output/
+
+# Firebase
+firebase-creds.json
