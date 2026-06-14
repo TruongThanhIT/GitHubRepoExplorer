@@ -38,9 +38,6 @@ android {
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
-            all {
-                it.systemProperty("robolectric.sdk", "35")
-            }
         }
     }
 
