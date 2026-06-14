@@ -1,0 +1,23 @@
+default_platform(:android)
+
+platform :android do
+  desc "Run Unit Test, Lint and Build APK Release for CI/Nightly"
+    lane :ci_check do
+
+      api_level = ENV["API_LEVEL"] || "36"
+
+      puts "🚀 Starting CI Check for API Level: #{api_level}"
+
+      gradle(task: "testDebugUnitTest")
+
+      gradle(task: "lintRelease")
+
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        properties: {
+          "android.builder.sdkDownload" => true
+        }
+      )
+    end
+end

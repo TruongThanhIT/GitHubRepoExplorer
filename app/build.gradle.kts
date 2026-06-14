@@ -9,16 +9,18 @@ plugins {
     alias(libs.plugins.hilt.android)
 }
 
+val apiLevelFromEnv = System.getenv("API_LEVEL")?.toIntOrNull()
+
 android {
     namespace = "com.thanh.githubrepoexplorer"
     compileSdk {
-        version = release(36)
+        version =  release(apiLevelFromEnv ?: 36)
     }
 
     defaultConfig {
         applicationId = "com.thanh.githubrepoexplorer"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = apiLevelFromEnv ?: 36
         versionCode = 1
         versionName = "1.0"
 
@@ -34,10 +36,10 @@ android {
 
     signingConfigs {
         create("release") {
+            storeFile = rootProject.file("app/release.keystore")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
-            keyPassword = System.getenv("KEYSTORE_PASSWORD")
-            storeFile = file("release.keystore")
             keyAlias = "github"
+            keyPassword = System.getenv("KEYSTORE_PASSWORD")
         }
     }
 

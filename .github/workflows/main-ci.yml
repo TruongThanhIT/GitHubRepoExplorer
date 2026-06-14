@@ -10,7 +10,7 @@ jobs:
   android-build:
     uses: ./.github/workflows/reusable-android-build.yml
     with:
-      api-level: 35
+      api-level: 36
     secrets:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
