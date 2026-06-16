@@ -8,7 +8,7 @@ platform :android do
 
       gradle(
         task: "testDebugUnitTest",
-#         flags: "--stacktrace --info",
+        flags: "--stacktrace --info",
         properties: {
           "API_LEVEL" => api_level
         }
