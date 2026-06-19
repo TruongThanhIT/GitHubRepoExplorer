@@ -1,0 +1,26 @@
+name: Deploy Internal to Google Play
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  verify-code:
+    uses: ./.github/workflows/reusable-android-verification.yml
+    with:
+      api-level: 36
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+
+  upload-playstore:
+    needs: verify-code
+    uses: ./.github/workflows/reusable-android-distribution.yml
+    with:
+      target-store: "google_play"
+    secrets:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
+      STORE_API_KEY_JSON: ${{ secrets.STORE_API_KEY_JSON }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
