@@ -1,7 +1,7 @@
 name: Deploy Internal to Firebase
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master1" ]
 
 jobs:
   verify-code:

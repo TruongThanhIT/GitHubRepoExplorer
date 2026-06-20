@@ -2,7 +2,7 @@ name: Main CI (Trigger & Orchestrator)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master1" ]
   pull_request:
     branches: [ "master" ]
 

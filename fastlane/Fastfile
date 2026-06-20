@@ -65,10 +65,9 @@ platform :android do
     gradle(task: "bundle", build_type: "Release")
     play_store_json = ENV["GOOGLE_PLAY_JSON"]
     if play_store_json
-      # Temporary debug info (safe because it doesn't print the whole key)
       puts "🔑 Debug: JSON raw length is #{play_store_json.length}"
 
-      play_store_json = play_store_json.strip.gsub(/^'|'$/, '').gsub(/\n|\r|\t/, '')
+      play_store_json = play_store_json.strip.gsub(/^'|'$/, '')
       play_store_json = play_store_json.gsub('\\n', "\n")
 
       puts "🔑 Debug: JSON after cleaning starts with: #{play_store_json[0..10]}"
