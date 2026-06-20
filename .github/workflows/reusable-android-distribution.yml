@@ -17,7 +17,7 @@ on:
         required: true
       MY_KEYSTORE_PASSWORD:
         required: true
-      STORE_API_KEY_JSON:
+      GOOGLE_PLAY_JSON:
         required: false # for Google Play
       FIREBASE_SERVICE_ACCOUNT_JSON:
         required: false # for Firebase
@@ -48,7 +48,7 @@ jobs:
         env:
           KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
           TARGET_STORE: ${{ inputs.target-store }}
-          GOOGLE_PLAY_JSON: ${{ secrets.STORE_API_KEY_JSON }}
+          GOOGLE_PLAY_JSON: ${{ secrets.GOOGLE_PLAY_JSON }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
           FIREBASE_APP_ID: ${{ inputs.FIREBASE_APP_ID }}
           FIREBASE_TESTER_GROUPS: ${{ inputs.FIREBASE_TESTER_GROUPS }}

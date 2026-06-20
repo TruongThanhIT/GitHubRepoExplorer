@@ -31,6 +31,6 @@ jobs:
     secrets:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       MY_KEYSTORE_PASSWORD: ${{ secrets.MY_KEYSTORE_PASSWORD }}
-      STORE_API_KEY_JSON: ${{ secrets.STORE_API_KEY_JSON }}
+      GOOGLE_PLAY_JSON: ${{ secrets.GOOGLE_PLAY_JSON }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
