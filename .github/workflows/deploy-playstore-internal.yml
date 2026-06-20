@@ -3,6 +3,16 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version_name:
+        description: 'Describe Version (e.g: 1.0.3)'
+        required: true
+        default: '1.0.3'
+      version_code:
+        description: 'Version Code (need increase)'
+        required: true
+        default: '4'
 
 jobs:
   verify-code:
