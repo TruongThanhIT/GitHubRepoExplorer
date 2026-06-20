@@ -43,6 +43,10 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/release.keystore
 
+      - name: Create Play Store Key File
+        if: inputs.target-store == 'google_play'
+        run: echo '${{ secrets.GOOGLE_PLAY_JSON }}' | sed 's/^'\'// | sed 's/'\'$// > fastlane/play-store-key.json
+
       - name: Run Fastlane Ship
         run: bundle exec fastlane android ship
         env:

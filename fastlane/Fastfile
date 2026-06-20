@@ -63,19 +63,10 @@ platform :android do
     private_lane :deploy_internal_playstore do
     puts "🚀 Starting Internal Deployment to Google Play..."
     gradle(task: "bundle", build_type: "Release")
-    play_store_json = ENV["GOOGLE_PLAY_JSON"]
-    if play_store_json
-      puts "🔑 Debug: JSON raw length is #{play_store_json.length}"
 
-      play_store_json = play_store_json.strip.gsub(/^'|'$/, '')
-      play_store_json = play_store_json.gsub('\\n', "\n")
-
-      puts "🔑 Debug: JSON after cleaning starts with: #{play_store_json[0..10]}"
-      puts "🔑 Debug: JSON after cleaning ends with: #{play_store_json[-10..-1]}"
-    end
     upload_to_play_store(
       track: 'internal',
-      json_key_data: play_store_json,
+      json_key: 'fastlane/play-store-key.json',
       aab: "app/build/outputs/bundle/release/app-release.aab",
       skip_upload_images: true,
       skip_upload_screenshots: true,
