@@ -38,10 +38,7 @@ platform :android do
       if target == "firebase"
         deploy_internal
       elsif target == "google_play"
-
-        puts "🚀 Shipping to Google Play..."
-        gradle(task: "bundle", build_type: "Release")
-        # upload_to_play_store(...)
+        deploy_internal_playstore
       end
     end
 
