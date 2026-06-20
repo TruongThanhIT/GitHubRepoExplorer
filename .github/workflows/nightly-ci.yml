@@ -1,9 +1,9 @@
 name: Nightly Compatibility Check
 
 on:
-  schedule:
-    # Run on 00:02 AM daily
-    - cron: '0 2 * * *'
+#  schedule:
+#    # Run on 00:02 AM daily
+#    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:

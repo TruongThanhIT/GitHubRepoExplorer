@@ -1,7 +1,9 @@
 name: Deploy Internal to Firebase
 on:
-  push:
-    branches: [ "master1" ]
+  schedule:
+    # Run on 00:02 AM daily
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   verify-code:
