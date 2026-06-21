@@ -35,13 +35,13 @@ runs:
             --type instrumentation \
             --app ${{ inputs.app_apk }} \
             --test ${{ inputs.test_apk }} \
-            --device model=Pixel2,version=34,locale=en,orientation=portrait \
+            --device model=Pixel3,version=34,locale=en,orientation=portrait \
             --timeout 10m
         else
           echo "Running Robo Test..."
           gcloud firebase test android run \
             --type robo \
             --app ${{ inputs.app_apk }} \
-            --device model=Pixel2,version=34,locale=en,orientation=portrait \
+            --device model=Pixel3,version=34,locale=en,orientation=portrait \
             --timeout 5m
         fi
