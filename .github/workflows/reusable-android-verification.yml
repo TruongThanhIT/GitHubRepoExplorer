@@ -59,4 +59,3 @@ jobs:
           gcp_credentials: ${{ secrets.FIREBASE_TEST_LAB_CREDENTIALS }}
           app_apk: "app/build/outputs/apk/debug/app-debug.apk"
           test_apk: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
-          api_level: ${{ inputs.api-level }}
