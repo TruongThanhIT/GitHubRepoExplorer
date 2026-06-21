@@ -6,7 +6,7 @@ on:
       api-level:
         required: true
         type: number
-      run_ui_test:
+      run_ui_tests:
         required: false
         type: boolean
         default: false
