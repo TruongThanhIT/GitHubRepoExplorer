@@ -11,7 +11,7 @@ jobs:
   android-build:
     uses: ./.github/workflows/reusable-android-verification.yml
     with:
-      api-level: 33
+      api-level: 34
       run_ui_tests: true
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
