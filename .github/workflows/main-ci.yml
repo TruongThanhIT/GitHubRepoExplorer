@@ -11,6 +11,8 @@ jobs:
     uses: ./.github/workflows/reusable-android-verification.yml
     with:
       api-level: 36
+      run_ui_tests: true
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      FIREBASE_TEST_LAB_CREDENTIALS: ${{ secrets.FIREBASE_TEST_LAB_CREDENTIALS }}

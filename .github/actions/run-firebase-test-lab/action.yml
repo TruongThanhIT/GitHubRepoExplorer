@@ -1,0 +1,47 @@
+name: "Run Firebase Test Lab"
+description: "Uploads APKs and runs Robo or Instrumentation tests on Firebase Test Lab"
+
+inputs:
+  gcp_credentials:
+    description: "GCP Service Account JSON key"
+    required: true
+  app_apk:
+    description: "Path to the app APK"
+    required: true
+  test_apk:
+    description: "Path to the test APK (optional)"
+    required: false
+  api_level:
+    description: "Android API level for the emulator"
+    required: true
+    default: "30"
+runs:
+  using: "composite"
+  steps:
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: '${{ inputs.gcp_credentials }}'
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Run Firebase Test Lab
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.test_apk }}" ]; then
+          echo "Running Instrumentation Test..."
+          gcloud firebase test android run \
+            --type instrumentation \
+            --app ${{ inputs.app_apk }} \
+            --test ${{ inputs.test_apk }} \
+            --device model=Pixel3,version=${{ inputs.api_level }},locale=en,orientation=portrait \
+            --timeout 10m
+        else
+          echo "Running Robo Test..."
+          gcloud firebase test android run \
+            --type robo \
+            --app ${{ inputs.app_apk }} \
+            --device model=Pixel3,version=${{ inputs.api_level }},locale=en,orientation=portrait \
+            --timeout 5m
+        fi

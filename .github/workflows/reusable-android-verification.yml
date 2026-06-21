@@ -6,10 +6,16 @@ on:
       api-level:
         required: true
         type: number
+      run_ui_test:
+        required: false
+        type: boolean
+        default: false
     secrets:
       GH_TOKEN:
         required: true
       GOOGLE_SERVICES_JSON:
+        required: false
+      FIREBASE_TEST_LAB_CREDENTIALS:
         required: false
 
 jobs:
@@ -41,3 +47,16 @@ jobs:
         with:
           name: lint-report-api-${{ inputs.api-level }}
           path: app/build/reports/lint-results-release.*
+
+      - name: Build App and Test APK
+        if: ${{ inputs.run_ui_tests == true }}
+        run: ./gradlew assembleDebug assembleDebugAndroidTest
+
+      - name: Run Tests on FTL
+        if: ${{ inputs.run_ui_tests == true }}
+        uses: ./.github/actions/run-firebase-test-lab
+        with:
+          gcp_credentials: ${{ secrets.FIREBASE_TEST_LAB_CREDENTIALS }}
+          app_apk: "app/build/outputs/apk/debug/app-debug.apk"
+          test_apk: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
+          api_level: ${{ inputs.api-level }}
